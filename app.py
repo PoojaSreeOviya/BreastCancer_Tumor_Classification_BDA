@@ -87,7 +87,6 @@ app.layout = html.Div(
     ]
 )
 
-# Update callback to accept 9 features
 @app.callback(
     Output('output-result', 'children'),
     [Input('classify-btn', 'n_clicks')],
@@ -112,7 +111,14 @@ def classify_tumor(n_clicks, feature1, feature2, feature3, feature4, feature5, f
         features_std = scaler.transform(features)
         prediction = model.predict(features_std)
         
-        result = 'Malignant' if prediction[0] == 4 else 'Benign'
+        # Classify based on the predicted value
+        if prediction[0] == 2:
+            result = 'Benign'
+        elif prediction[0] == 4:
+            result = 'Malignant'
+        else:
+            result = 'Unknown classification'
+
         return f'The tumor is classified as: {result}'
     return ''
 
