@@ -23,15 +23,6 @@ app.layout = html.Div(
             "Tumor Classification",
             style={'text-align': 'center', 'color': 'white', 'padding': '20px', 'backgroundColor': 'black'}
         ),
-        # Adding a placeholder image related to medical data
-        html.Div(
-            children=[
-                html.Img(
-                    src='https://www.istockphoto.com/photos/tumor', 
-                    style={'width': '50%', 'display': 'block', 'margin': 'auto'}
-                )
-            ]
-        ),
         html.Div(
             style={'text-align': 'center', 'padding': '30px'},
             children=[
