@@ -20,8 +20,8 @@ app.layout = html.Div(
     style={'backgroundColor': '#f0f8ff', 'fontFamily': 'Arial, sans-serif'},
     children=[
         html.H1(
-            "Tumor Classification Dashboard",
-            style={'text-align': 'center', 'color': '#007BFF', 'padding': '20px', 'backgroundColor': '#f4f4f4'}
+            "Tumor Classification ",
+            style={'text-align': 'center', 'color': 'white', 'padding': '20px', 'backgroundColor': 'black'}
         ),
         # Adding a placeholder image related to medical data
         html.Div(
@@ -61,24 +61,44 @@ app.layout = html.Div(
 @app.callback(
     Output('output-result', 'children'),
     [Input('classify-btn', 'n_clicks')],
-    [State(f'input-feature{i+1}', 'value') for i in range(9)]
+    [State('input-feature1', 'value'),
+     State('input-feature2', 'value'),
+     State('input-feature3', 'value'),
+     State('input-feature4', 'value'),
+     State('input-feature5', 'value'),
+     State('input-feature6', 'value'),
+     State('input-feature7', 'value'),
+     State('input-feature8', 'value'),
+     State('input-feature9', 'value')]
 )
-def classify_tumor(n_clicks, *features):
+def classify_tumor(n_clicks, feature1, feature2, feature3, feature4, feature5, feature6, feature7, feature8, feature9):
     if n_clicks > 0:
-        if None in features:
+        # Ensure all features are provided
+        if None in [feature1, feature2, feature3, feature4, feature5, feature6, feature7, feature8, feature9]:
             return "Please provide all features before classifying."
         
-        features = np.array([features])
-        features_std = scaler.transform(features)
-        prediction = model.predict(features_std)
+        # Print for debugging
+        print("Received features:", feature1, feature2, feature3, feature4, feature5, feature6, feature7, feature8, feature9)
         
+        # Prepare the feature vector
+        features = np.array([[feature1, feature2, feature3, feature4, feature5, feature6, feature7, feature8, feature9]])  
+        features_std = scaler.transform(features)
+        print("Transformed features:", features_std)  # Print the standardized features for debugging
+        
+        prediction = model.predict(features_std)
+        print("Prediction:", prediction)  # Check what the model is predicting
+        
+        # Classify based on the predicted value
         if prediction[0] == 2:
-            return 'The Tumor is classified as: Benign'
+            result = 'Benign'
         elif prediction[0] == 4:
-            return 'The Tumor is classified as: Malignant'
+            result = 'Malignant'
         else:
-            return 'Unknown classification'
+            result = 'Unknown classification'
+
+        return f'The Tumor is classified as: {result}'
     return ''
+
 
 # Run the server
 if __name__ == '__main__':
