@@ -15,34 +15,62 @@ server = Flask(__name__)
 # Create the Dash app
 app = dash.Dash(__name__, server=server)
 
-# Layout of the dashboard
-app.layout = html.Div([
-    html.H1("Tumor Classification Dashboard", style={'text-align': 'center'}),
-    
-    # Input fields for tumor features
-    html.Div([
-        html.Label("Feature 1:"),
-        dcc.Input(id='input-feature1', type='number', placeholder='Enter Feature 1', min=0, step=1),
-        html.Br(),
+# Define the layout with added colors and styling
+app.layout = html.Div(
+    style={'backgroundColor': '#f4f4f4', 'fontFamily': 'Arial, sans-serif'},
+    children=[
+        # Header
+        html.H1(
+            "Tumor Classification Dashboard",
+            style={'text-align': 'center', 'color': '#333', 'padding': '20px', 'backgroundColor': '#007BFF'}
+        ),
         
-        html.Label("Feature 2:"),
-        dcc.Input(id='input-feature2', type='number', placeholder='Enter Feature 2', min=0, step=1),
-        html.Br(),
+        # Input fields for tumor features
+        html.Div(
+            style={'text-align': 'center', 'padding': '30px'},
+            children=[
+                html.Div([
+                    html.Label("Feature 1:", style={'font-weight': 'bold'}),
+                    dcc.Input(id='input-feature1', type='number', placeholder='Enter Feature 1', min=0, step=1, 
+                              style={'margin': '10px', 'padding': '5px'}),
+                ], style={'display': 'inline-block', 'width': '20%'}),
+                
+                html.Div([
+                    html.Label("Feature 2:", style={'font-weight': 'bold'}),
+                    dcc.Input(id='input-feature2', type='number', placeholder='Enter Feature 2', min=0, step=1, 
+                              style={'margin': '10px', 'padding': '5px'}),
+                ], style={'display': 'inline-block', 'width': '20%'}),
+                
+                html.Div([
+                    html.Label("Feature 3:", style={'font-weight': 'bold'}),
+                    dcc.Input(id='input-feature3', type='number', placeholder='Enter Feature 3', min=0, step=1, 
+                              style={'margin': '10px', 'padding': '5px'}),
+                ], style={'display': 'inline-block', 'width': '20%'}),
+                
+                html.Div([
+                    html.Label("Feature 4:", style={'font-weight': 'bold'}),
+                    dcc.Input(id='input-feature4', type='number', placeholder='Enter Feature 4', min=0, step=1, 
+                              style={'margin': '10px', 'padding': '5px'}),
+                ], style={'display': 'inline-block', 'width': '20%'}),
+                
+                # Classify Button
+                html.Br(),
+                html.Button(
+                    'Classify Tumor', 
+                    id='classify-btn', 
+                    n_clicks=0, 
+                    style={
+                        'backgroundColor': '#28a745', 'color': 'white', 'fontSize': '16px',
+                        'borderRadius': '5px', 'border': 'none', 'padding': '10px 20px'
+                    }
+                ),
+            ]
+        ),
         
-        html.Label("Feature 3:"),
-        dcc.Input(id='input-feature3', type='number', placeholder='Enter Feature 3', min=0, step=1),
-        html.Br(),
-        
-        html.Label("Feature 4:"),
-        dcc.Input(id='input-feature4', type='number', placeholder='Enter Feature 4', min=0, step=1),
-        html.Br(),
-        
-        html.Button('Classify Tumor', id='classify-btn', n_clicks=0)
-    ], style={'text-align': 'center', 'padding': '20px'}),
-    
-    # Output for the prediction result
-    html.Div(id='output-result', style={'text-align': 'center', 'padding': '20px'})
-])
+        # Output for the prediction result
+        html.Div(id='output-result', style={'text-align': 'center', 'padding': '20px', 'color': '#007BFF', 'fontSize': '20px'})
+    ]
+)
 
 # Callback to handle prediction
 @app.callback(
@@ -55,10 +83,11 @@ app.layout = html.Div([
 )
 def classify_tumor(n_clicks, feature1, feature2, feature3, feature4):
     if n_clicks > 0:
-        # Ensure all features are provided before classification
+        # Ensure all features are provided
         if None in [feature1, feature2, feature3, feature4]:
-            return "Please provide all features."
+            return "Please provide all features before classifying."
         
+        # Prepare the feature vector
         features = np.array([[feature1, feature2, feature3, feature4]])  # Adjust for your dataset
         features_std = scaler.transform(features)
         prediction = model.predict(features_std)
@@ -67,5 +96,6 @@ def classify_tumor(n_clicks, feature1, feature2, feature3, feature4):
         return f'The tumor is classified as: {result}'
     return ''
 
+# Run the server
 if __name__ == '__main__':
     app.run_server(debug=True)
