@@ -20,14 +20,14 @@ app.layout = html.Div(
     style={'backgroundColor': '#f0f8ff', 'fontFamily': 'Arial, sans-serif'},
     children=[
         html.H1(
-            "Tumor Classification ",
+            "Tumor Classification",
             style={'text-align': 'center', 'color': 'white', 'padding': '20px', 'backgroundColor': 'black'}
         ),
         # Adding a placeholder image related to medical data
         html.Div(
             children=[
                 html.Img(
-                    src='https://path-to-your-image.jpg', 
+                    src='https://www.istockphoto.com/photos/tumor', 
                     style={'width': '50%', 'display': 'block', 'margin': 'auto'}
                 )
             ]
