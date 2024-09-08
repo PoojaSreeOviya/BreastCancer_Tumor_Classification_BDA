@@ -20,7 +20,7 @@ app.layout = html.Div(
     style={'backgroundColor': '#f4f4f4', 'fontFamily': 'Arial, sans-serif'},
     children=[
         html.H1(
-            "Tumor Classification Dashboard",
+            "Tumor Classification",
             style={'text-align': 'center', 'color': '#333', 'padding': '20px', 'backgroundColor': '#007BFF'}
         ),
         html.Div(
@@ -119,7 +119,7 @@ def classify_tumor(n_clicks, feature1, feature2, feature3, feature4, feature5, f
         else:
             result = 'Unknown classification'
 
-        return f'The tumor is classified as: {result}'
+        return f'The Tumor is classified as: {result}'
     return ''
 
 # Run the server
