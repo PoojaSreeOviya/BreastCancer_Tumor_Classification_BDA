@@ -36,7 +36,7 @@ app.layout = html.Div(
             "Tumor Classification",
             style={
                 'text-align': 'center',
-                'color': '#ffcc00',
+                'color': 'white',
                 'padding': '20px',
                 'backgroundColor': 'rgba(0, 0, 0, 0.7)',  # Translucent background for better text visibility
                 'borderRadius': '10px',
@@ -48,7 +48,7 @@ app.layout = html.Div(
             children=[
                 # Input fields for all the tumor features with updated names
                 *[html.Div([
-                    html.Label(f"{feature_names[i]}:", style={'font-weight': 'bold', 'fontSize': '18px', 'color': '#ffcc00'}),
+                    html.Label(f"{feature_names[i]}:", style={'font-weight': 'bold', 'fontSize': '18px', 'color': 'black'}),
                     dcc.Input(
                         id=f'input-feature{i+1}', 
                         type='number', 
@@ -72,7 +72,7 @@ app.layout = html.Div(
                     n_clicks=0, 
                     style={
                         'backgroundColor': 'blue',
-                        'color': 'black',
+                        'color': 'white',
                         'fontSize': '18px',
                         'borderRadius': '5px',
                         'border': 'none',
