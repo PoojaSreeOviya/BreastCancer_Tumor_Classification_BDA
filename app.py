@@ -15,12 +15,6 @@ server = Flask(__name__)
 # Create the Dash app
 app = dash.Dash(__name__, server=server)
 
-# Define the actual feature names
-feature_names = [
-    'Radius', 'Texture', 'Perimeter', 'Area', 'Smoothness', 
-    'Compactness', 'Concavity', 'Concave Points', 'Symmetry'
-]
-
 # Define the layout with added colors, styling, and an image
 app.layout = html.Div(
     style={'backgroundColor': '#f0f8ff', 'fontFamily': 'Arial, sans-serif'},
@@ -32,10 +26,10 @@ app.layout = html.Div(
         html.Div(
             style={'text-align': 'center', 'padding': '30px'},
             children=[
-                # Input fields for all the tumor features with updated names
+                # Input fields for all the tumor features
                 *[html.Div([
-                    html.Label(f"{feature_names[i]}:", style={'font-weight': 'bold'}),
-                    dcc.Input(id=f'input-feature{i+1}', type='number', placeholder=f'Enter {feature_names[i]}', min=0, step=1,
+                    html.Label(f"Feature {i+1}:", style={'font-weight': 'bold'}),
+                    dcc.Input(id=f'input-feature{i+1}', type='number', placeholder=f'Enter Feature {i+1}', min=0, step=1,
                               style={'margin': '10px', 'padding': '5px'}),
                 ], style={'display': 'inline-block', 'width': '20%'}) for i in range(9)],
                 
@@ -58,20 +52,28 @@ app.layout = html.Div(
 @app.callback(
     Output('output-result', 'children'),
     [Input('classify-btn', 'n_clicks')],
-    [State(f'input-feature{i+1}', 'value') for i in range(9)]
+    [State('input-feature1', 'value'),
+     State('input-feature2', 'value'),
+     State('input-feature3', 'value'),
+     State('input-feature4', 'value'),
+     State('input-feature5', 'value'),
+     State('input-feature6', 'value'),
+     State('input-feature7', 'value'),
+     State('input-feature8', 'value'),
+     State('input-feature9', 'value')]
 )
-def classify_tumor(n_clicks, *features):
+def classify_tumor(n_clicks, feature1, feature2, feature3, feature4, feature5, feature6, feature7, feature8, feature9):
     if n_clicks > 0:
         # Ensure all features are provided
-        if None in features:
+        if None in [feature1, feature2, feature3, feature4, feature5, feature6, feature7, feature8, feature9]:
             return "Please provide all features before classifying."
         
         # Print for debugging
-        print("Received features:", features)
+        print("Received features:", feature1, feature2, feature3, feature4, feature5, feature6, feature7, feature8, feature9)
         
         # Prepare the feature vector
-        features_array = np.array([features])  
-        features_std = scaler.transform(features_array)
+        features = np.array([[feature1, feature2, feature3, feature4, feature5, feature6, feature7, feature8, feature9]])  
+        features_std = scaler.transform(features)
         print("Transformed features:", features_std)  # Print the standardized features for debugging
         
         prediction = model.predict(features_std)
@@ -88,6 +90,8 @@ def classify_tumor(n_clicks, *features):
         return f'The Tumor is classified as: {result}'
     return ''
 
+
 # Run the server
 if __name__ == '__main__':
     app.run_server(debug=True)
+
