@@ -17,8 +17,8 @@ app = dash.Dash(__name__, server=server)
 
 # Define the actual feature names
 feature_names = [
-    'Radius', 'Texture', 'Perimeter', 'Area', 'Smoothness', 
-    'Compactness', 'Concavity', 'Concave Points', 'Symmetry'
+    'Clumb Thickness', 'Uniformity of Cell Size', 'Uniformity of Cell Shape', 'Marginal Adhesion', 'Single Epithelial Cell Size', 
+    'Bare Nuclei', 'Bland Chromatin', 'Normal Nucleoli', 'Mitoses'
 ]
 
 # Define the layout with added colors, styling, and an image
