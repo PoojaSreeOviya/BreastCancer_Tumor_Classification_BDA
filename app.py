@@ -17,7 +17,7 @@ app = dash.Dash(__name__, server=server)
 
 # Define the actual feature names
 feature_names = [
-    'Clump Thickness', 'Uniformity of Cell Size', 'Uniformity of Cell Shape', 'Marginal Adhesion', 'Single Epithelial Cell Size', 
+    'Clump Thickness', 'Uniformity Cell Size', 'Uniformity Cell Shape', 'Marginal Adhesion', 'Epithelial Cell Size', 
     'Bare Nuclei', 'Bland Chromatin', 'Normal Nucleoli', 'Mitoses'
 ]
 
@@ -71,8 +71,8 @@ app.layout = html.Div(
                     id='classify-btn', 
                     n_clicks=0, 
                     style={
-                        'backgroundColor': '#28a745',
-                        'color': 'white',
+                        'backgroundColor': 'blue',
+                        'color': 'black',
                         'fontSize': '18px',
                         'borderRadius': '5px',
                         'border': 'none',
@@ -89,7 +89,7 @@ app.layout = html.Div(
                     style={
                         'text-align': 'center', 
                         'padding': '20px', 
-                        'color': '#ffcc00', 
+                        'color': 'white', 
                         'fontSize': '22px',
                         'marginTop': '20px',
                         'backgroundColor': 'rgba(0, 0, 0, 0.7)',
